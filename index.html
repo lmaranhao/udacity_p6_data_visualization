@@ -3,17 +3,37 @@
   <script src="http://dimplejs.org/dist/dimple.v2.3.0.min.js"></script>
   <script type="text/javascript">
     function draw(data) {
-      debugger;
-      var svg = dimple.newSvg("body", 800, 600);
-      // var data = [
-      //   { "Word":"Hello", "Awesomeness":2000 },
-      //   { "Word":"World", "Awesomeness":3000 }
-      // ];
-      // var chart = new dimple.chart(svg, data);
-      // chart.addCategoryAxis("x", "Word");
-      // chart.addMeasureAxis("y", "Awesomeness");
-      // chart.addSeries(null, dimple.plot.bar);
-      // chart.draw();
+
+      // adding a new "Count" column in there to get the percentages right
+      data.forEach(function(d){
+        d.Count = 1;
+      })
+      
+      var svg = dimple.newSvg("#graph1", 400, 600);
+      var chart = new dimple.chart(svg, data);
+      var x = chart.addCategoryAxis("x", "Sex");
+      
+      chart.addPctAxis("y", "Count");
+      var mySeries = chart.addSeries("Survived", dimple.plot.bar);
+
+      chart.assignColor("0", "#e41a1c", "white", 1);
+      chart.assignColor("1", "#377eb8", "white", 1);
+      chart.addLegend(-200, 20, 10, 50, "left");
+
+      // adding custom event handlers to change bars opacity
+      // as user hovers the mouse over them
+      mySeries.addEventHandler("mouseover", function (e){
+        d3.select(e.selectedShape._groups[0][0]).style("opacity", "0.7");
+        
+      });
+      mySeries.addEventHandler("mouseleave", function (e) {
+        d3.select(e.selectedShape._groups[0][0]).style("opacity", "1");
+      });
+
+      chart.draw();
+
+      svg.select(".dimple-legend .dimple-0").text("Perished");
+      svg.select(".dimple-legend .dimple-1").text("Survived");
     }
   </script>
 </head>
@@ -21,4 +41,7 @@
   <script type="text/javascript">
     d3.csv("titanic_data.csv", draw);
   </script>
+
+  <h1>Titanic: was easier on Women</h1>
+  <div id="graph1"></div>
 </body>
