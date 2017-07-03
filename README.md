@@ -14,9 +14,18 @@ It's hard to see from the chart the percentages of Perished and Survived.
 ##### 2- Vertical Bars
 Hard to distinguish the Perished from the Survived only based on the color of the bars.
 Also people said that the vertical orientation was worse to _feel_ the sizes. 
-**Action**: added legend, colors, hover animation, changed to vertical bars.
+**Action**: added legend, changed to vertical bars.
+
+##### 3- Vertical Bars Colors
+It would be better if we had colors that would relate to the legend (survivals vs perished)
+**Action**: added the blue and red colors and hover animation.
+
+##### 4- Review #1
+**Action** added Pclass graph, changed title, added explanatory text, added tooltip.
 
 ## Resources
 * [Dimple](http://dimplejs.org) - Dimplejs examples and documentation
 * [Stackoverflow](http://stackoverflow.com)
 * Udacity Forums
+
+

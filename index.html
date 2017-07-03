@@ -20,28 +20,51 @@
       chart.assignColor("1", "#377eb8", "white", 1);
       chart.addLegend(-200, 20, 10, 50, "left");
 
-      // adding custom event handlers to change bars opacity
-      // as user hovers the mouse over them
-      mySeries.addEventHandler("mouseover", function (e){
-        d3.select(e.selectedShape._groups[0][0]).style("opacity", "0.7");
-        
-      });
-      mySeries.addEventHandler("mouseleave", function (e) {
-        d3.select(e.selectedShape._groups[0][0]).style("opacity", "1");
-      });
-
       chart.draw();
 
-      svg.select(".dimple-legend .dimple-0").text("Perished");
-      svg.select(".dimple-legend .dimple-1").text("Survived");
+      var svg2 = dimple.newSvg("#graph2", 400, 600);
+
+      var chart2 = new dimple.chart(svg2, data);
+      var x2 = chart2.addCategoryAxis("x", "Pclass");
+      
+      chart2.addPctAxis("y", "Count");
+      var mySeries2 = chart2.addSeries("Survived", dimple.plot.bar);
+
+      chart2.assignColor("0", "#e41a1c", "white", 1);
+      chart2.assignColor("1", "#377eb8", "white", 1);
+      chart2.addLegend(-200, 20, 10, 50, "left");
+      chart2.draw();
+
+      d3.selectAll(".dimple-legend .dimple-0").text("Perished");
+      d3.selectAll(".dimple-legend .dimple-1").text("Survived");
+
+
     }
   </script>
+  <style>
+    .paragraph {
+       width:600px;
+    }
+
+   .dimple-custom-series-bar:hover {
+      opacity: 0.7;
+    }
+  </style>
 </head>
 <body>
   <script type="text/javascript">
     d3.csv("titanic_data.csv", draw);
   </script>
 
-  <h1>Titanic: was easier on Women</h1>
+  <h1>Titanic survival chances per gender</h1>
+  <div class="paragraph">
+    <p>For those who have never heard about it, the Titanic was a British passenger ship that sank in the North Atlantic Ocean in April 15th 1912, after colliding with an iceberg. Back then it was the world's biggest and fanciest passenger ship and it was carrying some of the wealthiest people in the world. It was equipped with the cutting edge technology available at that time but it didn't have enough lifeboats to accommodate all of those aboard.</p>
+    <p>The graph below shows that the phrase "women and children first" was taken seriously when the accident happened. The graph shows that 74% of the women have survived while only 19% of the men had the same luck.</p>
+    </div>
   <div id="graph1"></div>
+  <div class="paragraph">
+    <p>The second graph illustrates how wealth increased the survival chances or passengers. Here we used the Pclass (short for passenger class) as a proxy for socio-economic status (Pclass 1 (first class) = Upper, Pclass 2 = Middle, Pclass 3 = Lower). Pclass 1 had a survival rate of 63% while the Pclass 2 43% and Pclass 3 24%.</p>
+  </div>
+  
+  <div id="graph2"></div>
 </body>
